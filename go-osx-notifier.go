@@ -2,7 +2,6 @@ package gosxnotifier
 
 import (
 	"errors"
-	"fmt"
 	"net/url"
 	"os/exec"
 	"strings"
