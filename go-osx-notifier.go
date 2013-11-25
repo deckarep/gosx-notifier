@@ -1,4 +1,4 @@
-package main
+package gosxnotifier
 
 import (
 	"errors"
@@ -99,28 +99,10 @@ func (n *Notification) SendNotification() error {
 
 	bPath := strings.Replace(binaryPath, "{type}", string(n.Type), -1)
 
-	_, err := exec.Command(bPath, commandTuples...).Output()
+	_, err = exec.Command(bPath, commandTuples...).Output()
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-
-func main() {
-
-	note := NewNotification(Info, "Check your Apple Stock!")
-	note.Title = "💰" //Cool emojis
-	note.Subtitle = "My subtitle"
-	note.Sound = Basso
-	note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Safari
-
-	err := note.SendNotification()
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	//TODO: need to add the commands to a command slice
-	//then call the exec.Command with the slice separated ...(like a params object)
 }
