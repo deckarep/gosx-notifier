@@ -20,9 +20,9 @@ Go Version Inspired By:
 [node-osx-notifier](https://github.com/azoff/node-osx-notifier) This version is designed to be a node.js server where you can fire notifications by making REST requests.  The Go version is a static API for Go designed to be used within a Go app as needed.
 
 
-Installation
-------------
-The following command will install the notification api for Go along with the binaries.
+Installation and Requirements
+-----------------------------
+The following command will install the notification api for Go along with the binaries.  Also, utilizing this lib requires OSX 10.8 or higher. It will simply not work on lower versions of OSX.
 
 ```sh
 go get github.com/deckarep/gosx-notifier
@@ -33,28 +33,29 @@ Using the Code
 It's a pretty straightforward API:
 
 ```Go
-	//At a minimum specifiy a message type and message
-	note := NewNotification(Info, "Check your Apple Stock!")
+	
+//At a minimum specifiy a message type and message
+note := NewNotification(Info, "Check your Apple Stock!")
 
-	//Optionally set a title
-	note.Title = "It's money making time 💰"
+//Optionally, set a title
+note.Title = "It's money making time 💰"
 
-	//Optionally set a subtitle
-	note.Subtitle = "My subtitle" 
+//Optionally, set a subtitle
+note.Subtitle = "My subtitle" 
 
-	//Optionally set a sound from a OSX' predefined set.
-	note.Sound = Basso
+//Optionally, set a sound from a predefined set.
+note.Sound = Basso
 
-	//Optionally specifiy a url or bundleid to open should the notification be clicked.
-	note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
+//Optionally, specifiy a url or bundleid to open should the notification be clicked.
+note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
 
-	//Fire off the notification
-	err := note.SendNotification()
+//Then, fire off the notification
+err := note.SendNotification()
 
-	//Check error if necessary
-	if err != nil {
-		log.Println("Uh oh!")
-	}
+//If necessary, check error
+if err != nil {
+	log.Println("Uh oh!")
+}
 ```
 
 Coming Soon
