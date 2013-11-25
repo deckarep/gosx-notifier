@@ -1,64 +1,126 @@
 package main
 
 import (
-	"log"
+	"errors"
+	"fmt"
+	"net/url"
 	"os/exec"
 	"strings"
-	"time"
 )
 
 const (
-	binaryPath = "../osx/terminal-notifier-{type}.app/Contents/MacOS/terminal-notifier"
+	binaryPath = "osx/terminal-notifier-{type}.app/Contents/MacOS/terminal-notifier"
 )
+
+type MessageType string
 
 const (
-	Fail = "fail"
-	Info = "info"
-	Pass = "pass"
+	Fail MessageType = "fail"
+	Info MessageType = "info"
+	Pass MessageType = "pass"
 )
 
-//how to do sounds enumeration????
+type Sound string
+
 const (
-	Basso  = "Basso"
-	Blow   = "Blow"
-	Bottle = "Bottle"
+	Default Sound = "default"
+	Basso   Sound = "Basso"
+	Blow    Sound = "Blow"
+	Bottle  Sound = "Bottle"
+	Frog    Sound = "Frog"
+	Funk    Sound = "Funk"
+	Glass   Sound = "Glass"
+	Hero    Sound = "Hero"
+	Morse   Sound = "Morse"
+	Ping    Sound = "Ping"
+	Pop     Sound = "Pop"
+	Purr    Sound = "Purr"
+	Sosumi  Sound = "Sosumi"
+	Tink    Sound = "Tink"
 )
 
-type NotificationOptions struct {
-	Type     string
-	Message  string
-	Title    string //optional
-	Subtitle string //optional
+type Notification struct {
+	Type     MessageType //required
+	Message  string      //required
+	Title    string      //optional
+	Subtitle string      //optional
+	Sound    Sound       //optional
+	Link     string      //optional
+}
+
+func NewNotification(messageType MessageType, message string) *Notification {
+	n := &Notification{Type: messageType, Message: message}
+	return n
+}
+
+func (n *Notification) SendNotification() error {
+
+	commandTuples := make([]string, 0)
+
+	//check required commands
+	if n.Message == "" {
+		return errors.New("Please specifiy a proper message argument.")
+	} else {
+		commandTuples = append(commandTuples, []string{"-message", n.Message}...)
+	}
+
+	//add title if found
+	if n.Title != "" {
+		commandTuples = append(commandTuples, []string{"-title", n.Title}...)
+	}
+
+	//add subtitle if found
+	if n.Subtitle != "" {
+		commandTuples = append(commandTuples, []string{"-subtitle", n.Subtitle}...)
+	}
+
+	//add sound if specified
+	if n.Sound != "" {
+		commandTuples = append(commandTuples, []string{"-sound", string(n.Sound)}...)
+	}
+
+	//add url if specified
+	url, err := url.Parse(n.Link)
+	if err != nil {
+		n.Link = ""
+	}
+	if url != nil {
+		commandTuples = append(commandTuples, []string{"-open", n.Link}...)
+	}
+
+	//add bundle id if specified
+	if strings.HasPrefix(strings.ToLower(n.Link), "com.") {
+		commandTuples = append(commandTuples, []string{"-activate", n.Link}...)
+	}
+
+	if len(commandTuples) == 0 {
+		return errors.New("Please provide a Message and Type at a minimum.")
+	}
+
+	bPath := strings.Replace(binaryPath, "{type}", string(n.Type), -1)
+
+	_, err := exec.Command(bPath, commandTuples...).Output()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func main() {
 
-	//TODO: need to add the commands to a command slice
-	//then call the exec.Command with the slice separated ...(like a params object)
+	note := NewNotification(Info, "Check your Apple Stock!")
+	note.Title = "💰" //Cool emojis
+	note.Subtitle = "My subtitle"
+	note.Sound = Basso
+	note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Safari
 
-	notify(&NotificationOptions{Type: Fail, Message: "Program stopped", Title: "Hello"})
-	time.Sleep(1 * time.Second)
-
-	notify(&NotificationOptions{Type: Info, Message: "Check your Apple Stock: 💰"})
-	time.Sleep(1 * time.Second)
-
-	notify(&NotificationOptions{Type: Pass, Message: "It's done!"})
-	time.Sleep(1 * time.Second)
-}
-
-func notify(notificationOptions *NotificationOptions) {
-
-	bPath := strings.Replace(binaryPath, "{type}", notificationOptions.Type, -1)
-
-	var err error = nil
-	if notificationOptions.Title != "" {
-		_, err = exec.Command(bPath, "-message", notificationOptions.Message, "-title", notificationOptions.Title).Output()
-	} else {
-		_, err = exec.Command(bPath, "-message", notificationOptions.Message).Output()
-	}
+	err := note.SendNotification()
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 
+	//TODO: need to add the commands to a command slice
+	//then call the exec.Command with the slice separated ...(like a params object)
 }
