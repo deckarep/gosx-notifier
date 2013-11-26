@@ -2,10 +2,16 @@ package gosxnotifier
 
 import (
 	"errors"
+	"go/build"
 	"net/url"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
+
+func init() {
+
+}
 
 const (
 	binaryPath = "osx/terminal-notifier-{type}.app/Contents/MacOS/terminal-notifier"
@@ -96,9 +102,14 @@ func (n *Notification) SendNotification() error {
 		return errors.New("Please provide a Message and Type at a minimum.")
 	}
 
+	//find gopath
+	rootPath := filepath.Join(build.Default.GOPATH, "github.com/deckarep/gosx-notifier")
+
 	bPath := strings.Replace(binaryPath, "{type}", string(n.Type), -1)
 
-	_, err = exec.Command(bPath, commandTuples...).Output()
+	finalPath := filepath.Join(rootPath, bPath)
+
+	_, err = exec.Command(finalPath, commandTuples...).Output()
 	if err != nil {
 		return err
 	}
