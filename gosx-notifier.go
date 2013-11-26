@@ -102,8 +102,8 @@ func (n *Notification) SendNotification() error {
 		return errors.New("Please provide a Message and Type at a minimum.")
 	}
 
-	//find gopath
-	rootPath := filepath.Join(build.Default.GOPATH, "github.com/deckarep/gosx-notifier")
+	//find gopath (perhaps a better way to reference the binary's that make this API work?)
+	rootPath := filepath.Join(build.Default.GOPATH, "src", "github.com/deckarep/gosx-notifier")
 
 	bPath := strings.Replace(binaryPath, "{type}", string(n.Type), -1)
 
