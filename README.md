@@ -69,4 +69,4 @@ Coming Soon
 
 Licence
 -------
-This project is dual licensed under[any licensing defined by the underlying apps](https://github.com/alloy/terminal-notifier) and MIT licensed for this version written in Go.
+This project is dual licensed under [any licensing defined by the underlying apps](https://github.com/alloy/terminal-notifier) and MIT licensed for this version written in Go.
