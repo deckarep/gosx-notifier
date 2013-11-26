@@ -15,10 +15,4 @@ func Test_SendBasicNotification(t *testing.T) {
 	}
 }
 
-func Test_Package(t *testing.T) {
-
-	//fmt.Println(build.Default.GOPATH)
-
-	fp := filepath.Join(build.Default.GOPATH, "github.com/deckarep/gosx-notifier")
-	fmt.Println(fp)
-}
+//TODO: write some real freakin' tests.... (you got me, I didn't build this using TDD)
