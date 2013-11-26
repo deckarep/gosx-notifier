@@ -34,7 +34,7 @@ It's a pretty straightforward API:
 
 ```Go
 	
-//At a minimum specifiy a message type and message
+//At a minimum specifiy a message to display to end-user.
 note := NewNotification("Check your Apple Stock!")
 
 //Optionally, set a title
