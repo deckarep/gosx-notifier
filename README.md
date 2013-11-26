@@ -46,7 +46,8 @@ note.Subtitle = "My subtitle"
 //Optionally, set a sound from a predefined set.
 note.Sound = Basso
 
-//Optionally, set a sender
+//Optionally, set a sender (Notification will now use the Safari icon)
+note.Sender = "com.apple.Safari"
 
 //Optionally, specifiy a url or bundleid to open should the notification be clicked.
 note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
