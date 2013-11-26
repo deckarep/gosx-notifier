@@ -35,7 +35,7 @@ It's a pretty straightforward API:
 ```Go
 	
 //At a minimum specifiy a message type and message
-note := NewNotification(Info, "Check your Apple Stock!")
+note := NewNotification("Check your Apple Stock!")
 
 //Optionally, set a title
 note.Title = "It's money making time 💰"
@@ -45,6 +45,8 @@ note.Subtitle = "My subtitle"
 
 //Optionally, set a sound from a predefined set.
 note.Sound = Basso
+
+//Optionally, set a sender
 
 //Optionally, specifiy a url or bundleid to open should the notification be clicked.
 note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal

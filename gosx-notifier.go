@@ -14,21 +14,13 @@ func init() {
 }
 
 const (
-	binaryPath = "osx/terminal-notifier-{type}.app/Contents/MacOS/terminal-notifier"
-)
-
-type MessageType string
-
-const (
-	Fail MessageType = "fail"
-	Info MessageType = "info"
-	Pass MessageType = "pass"
+	binaryPath = "osx/terminal-notifier.app/Contents/MacOS/terminal-notifier"
 )
 
 type Sound string
 
 const (
-	Default Sound = "default"
+	Default Sound = "'default'"
 	Basso   Sound = "Basso"
 	Blow    Sound = "Blow"
 	Bottle  Sound = "Bottle"
@@ -45,16 +37,16 @@ const (
 )
 
 type Notification struct {
-	Type     MessageType //required
-	Message  string      //required
-	Title    string      //optional
-	Subtitle string      //optional
-	Sound    Sound       //optional
-	Link     string      //optional
+	Message  string //required
+	Title    string //optional
+	Subtitle string //optional
+	Sound    Sound  //optional
+	Link     string //optional
+	Sender   string //optional
 }
 
-func NewNotification(messageType MessageType, message string) *Notification {
-	n := &Notification{Type: messageType, Message: message}
+func NewNotification(message string) *Notification {
+	n := &Notification{Message: message}
 	return n
 }
 
@@ -98,6 +90,11 @@ func (n *Notification) SendNotification() error {
 		commandTuples = append(commandTuples, []string{"-activate", n.Link}...)
 	}
 
+	//add sender if specified
+	if strings.HasPrefix(strings.ToLower(n.Sender), "com.") {
+		commandTuples = append(commandTuples, []string{"-sender", n.Sender}...)
+	}
+
 	if len(commandTuples) == 0 {
 		return errors.New("Please provide a Message and Type at a minimum.")
 	}
@@ -105,9 +102,7 @@ func (n *Notification) SendNotification() error {
 	//find gopath (perhaps a better way to reference the binary's that make this API work?)
 	rootPath := filepath.Join(build.Default.GOPATH, "src", "github.com/deckarep/gosx-notifier")
 
-	bPath := strings.Replace(binaryPath, "{type}", string(n.Type), -1)
-
-	finalPath := filepath.Join(rootPath, bPath)
+	finalPath := filepath.Join(rootPath, binaryPath)
 
 	_, err = exec.Command(finalPath, commandTuples...).Output()
 	if err != nil {
