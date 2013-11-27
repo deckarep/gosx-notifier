@@ -67,7 +67,6 @@ package main
 
 import (
 	"github.com/deckarep/gosx-notifier"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -90,7 +89,8 @@ func main() {
 		select {
 		case result := <-ch:
 			if strings.HasPrefix(result, "-") {
-				showNotification("Urgent, can't ping website: " + result)
+				s := strings.Trim(result, "-")
+				showNotification("Urgent, can't ping website: " + s)
 			}
 		}
 	}
