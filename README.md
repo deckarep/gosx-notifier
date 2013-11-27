@@ -19,6 +19,10 @@ Go Version Inspired By:
 --------------------
 [node-osx-notifier](https://github.com/azoff/node-osx-notifier) This version is designed to be a node.js server where you can fire notifications by making REST requests.  The Go version is a static API for Go designed to be used within a Go app as needed.
 
+Dependancies:
+-------------
+There are none! If you utilize this package and create a binary executable it will auto-magically install the terminal-notifier component into a temp directory of the server.  This is possible because in this latest version the terminal-notifier binary is now statically embedded into the Go source files.
+
 
 Installation and Requirements
 -----------------------------
@@ -128,6 +132,13 @@ func pinger(ch chan string, site string) {
 	}
 }
 ```
+
+Usage Ideas
+-----------
+* Monitor your awesome server cluster and pop notifications when something goes haywire (we've all been there)
+* Scrape Hacker News looking for articles of certain keywords and pop a notification
+* Monitor your stock performance, pop a notification, before you lose all your money
+* Hook it up to ifttt.com and pop a notification when your motion-sensor at home goes off
 
 Coming Soon
 -----------
