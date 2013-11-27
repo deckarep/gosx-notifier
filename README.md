@@ -139,6 +139,7 @@ Usage Ideas
 * Scrape Hacker News looking for articles of certain keywords and pop a notification
 * Monitor your stock performance, pop a notification, before you lose all your money
 * Hook it up to ifttt.com and pop a notification when your motion-sensor at home goes off
+* Ping your Redis cluster for good behavior and pop a notification when a developer is storing JSON in Redis strings because they still think Redis is the same as Memcached.
 
 Coming Soon
 -----------
