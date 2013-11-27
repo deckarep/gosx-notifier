@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-func init() {
-
-}
-
 type Sound string
 
 const (
