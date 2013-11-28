@@ -12,8 +12,8 @@ notification center API](http://forums.macrumors.com/showthread.php?t=1403807) t
 result? A potentially useful API shackled to Apple's ecosystem.
 
 Thankfully, [Eloy Durán](https://github.com/alloy) put together a
-[set of sweet osx apps](https://github.com/alloy/terminal-notifier) that allow terminal access to the sandboxed API.
-**gosx-notifier** wraps these apps with a simple interface to the closed API.
+[an osx app](https://github.com/alloy/terminal-notifier) that allows terminal access to the sandboxed API.
+**gosx-notifier** embeds this app with a simple interface to the closed API.
 
 It's not perfect, and the implementor will quickly notice its limitations. However, it's a start and any pull requests are accepted and encouraged!
 
@@ -54,7 +54,7 @@ note.Sender = "com.apple.Safari"
 //Optionally, specifiy a url or bundleid to open should the notification be clicked.
 note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
 
-//Then, fire off the notification
+//Then, push the notification
 err := note.Push()
 
 //If necessary, check error
@@ -133,17 +133,15 @@ func pinger(ch chan string, site string) {
 
 Usage Ideas
 -----------
-* Monitor your awesome server cluster and pop notifications when something goes haywire (we've all been there)
-* Scrape Hacker News looking for articles of certain keywords and pop a notification
-* Monitor your stock performance, pop a notification, before you lose all your money
-* Hook it up to ifttt.com and pop a notification when your motion-sensor at home goes off
-* Ping your Redis cluster for good behavior and pop a notification when a developer is storing JSON in Redis strings because they still think Redis is the same as Memcached.
+* Monitor your awesome server cluster and push notifications when something goes haywire (we've all been there)
+* Scrape Hacker News looking for articles of certain keywords and push a notification
+* Monitor your stock performance, push a notification, before you lose all your money
+* Hook it up to ifttt.com and push a notification when your motion-sensor at home goes off
 
 Coming Soon
 -----------
 * Group ID
 * Remove ID
-
 
 Licence
 -------
