@@ -1,6 +1,6 @@
 gosx-notifier
 ===========================
-A [Go](http://golang.org) lib for sending notifications to OSX Mountain Lion's (10.8 or higher REQUIRED)
+A [Go](http://golang.org) lib for sending desktop notifications to OSX Mountain Lion's (10.8 or higher REQUIRED)
 [Notification Center](http://www.macworld.com/article/1165411/mountain_lion_hands_on_with_notification_center.html).
 
 [![GoDoc](http://godoc.org/github.com/deckarep/gosx-notifier?status.png)](http://godoc.org/github.com/deckarep/gosx-notifier)
