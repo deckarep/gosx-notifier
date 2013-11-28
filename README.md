@@ -17,10 +17,6 @@ Thankfully, [Eloy Durán](https://github.com/alloy) put together a
 
 It's not perfect, and the implementor will quickly notice its limitations. However, it's a start and any pull requests are accepted and encouraged!
 
-Go Version Inspired By:
---------------------
-[node-osx-notifier](https://github.com/azoff/node-osx-notifier) This version is designed to be a node.js server where you can fire notifications by making REST requests.  The Go version is a static API for Go designed to be used within a Go app as needed.
-
 Dependancies:
 -------------
 There are none! If you utilize this package and create a binary executable it will auto-magically install the terminal-notifier component into a temp directory of the server.  This is possible because in this latest version the terminal-notifier binary is now statically embedded into the Go source files.
