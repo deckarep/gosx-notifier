@@ -40,7 +40,7 @@ func NewNotification(message string) *Notification {
 	return n
 }
 
-func (n *Notification) SendNotification() error {
+func (n *Notification) Push() error {
 
 	commandTuples := make([]string, 0)
 

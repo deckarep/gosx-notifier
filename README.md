@@ -57,7 +57,7 @@ note.Sender = "com.apple.Safari"
 note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
 
 //Then, fire off the notification
-err := note.SendNotification()
+err := note.Push()
 
 //If necessary, check error
 if err != nil {
@@ -106,7 +106,7 @@ func showNotification(message string) {
 	note.Title = "Site Down"
 	note.Sound = gosxnotifier.Default
 
-	note.SendNotification()
+	note.Push()
 }
 
 //Prefixing a site with a + means it's up, while - means it's down
