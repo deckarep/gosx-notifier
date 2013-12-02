@@ -35,31 +35,40 @@ Using the Code
 It's a pretty straightforward API:
 
 ```Go
-	
-//At a minimum specifiy a message to display to end-user.
-note := NewNotification("Check your Apple Stock!")
+package main
 
-//Optionally, set a title
-note.Title = "It's money making time 💰"
+import (
+    "github.com/deckarep/gosx-notifier"
+    "log"
+)
 
-//Optionally, set a subtitle
-note.Subtitle = "My subtitle" 
+func main() {
+    //At a minimum specifiy a message to display to end-user.
+    note := gosxnotifier.NewNotification("Check your Apple Stock!")
 
-//Optionally, set a sound from a predefined set.
-note.Sound = Basso
+    //Optionally, set a title
+    note.Title = "It's money making time 💰"
 
-//Optionally, set a sender (Notification will now use the Safari icon)
-note.Sender = "com.apple.Safari"
+    //Optionally, set a subtitle
+    note.Subtitle = "My subtitle"
 
-//Optionally, specifiy a url or bundleid to open should the notification be clicked.
-note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
+    //Optionally, set a sound from a predefined set.
+    note.Sound = gosxnotifier.Basso
 
-//Then, push the notification
-err := note.Push()
+    //Optionally, set a sender (Notification will now use the Safari icon)
+    note.Sender = "com.apple.Safari"
 
-//If necessary, check error
-if err != nil {
-	log.Println("Uh oh!")
+    //Optionally, specifiy a url or bundleid to open should the notification be
+    //clicked.
+    note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
+
+    //Then, push the notification
+    err := note.Push()
+
+    //If necessary, check error
+    if err != nil {
+        log.Println("Uh oh!")
+    }
 }
 ```
 
