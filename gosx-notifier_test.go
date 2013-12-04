@@ -78,6 +78,22 @@ func Test_Sender(t *testing.T) {
 	}
 }
 
+func Test_Group(t *testing.T) {
+	const app_id string = "github.com/deckarep/gosx-notifier"
+
+	for i := 0; i < 3; i++ {
+		n := NewNotification("Testing Group Functionality...")
+		n.Group = app_id
+
+		err := n.Push()
+
+		if err != nil {
+			t.Error("Test_Group failed with error: ", err)
+		}
+
+	}
+}
+
 /*
 	Not an easy way to verify the tests below actually work as designed, but here for completion.
 */
