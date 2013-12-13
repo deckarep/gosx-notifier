@@ -155,3 +155,7 @@ Coming Soon
 Licence
 -------
 This project is dual licensed under [any licensing defined by the underlying apps](https://github.com/alloy/terminal-notifier) and MIT licensed for this version written in Go.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/deckarep/gosx-notifier/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
