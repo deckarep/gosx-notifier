@@ -150,7 +150,6 @@ Usage Ideas
 
 Coming Soon
 -----------
-* Group ID
 * Remove ID
 
 Licence
