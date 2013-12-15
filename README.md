@@ -11,9 +11,7 @@ OSX Mountain Lion comes packaged with a built-in notification center. For whatev
 notification center API](http://forums.macrumors.com/showthread.php?t=1403807) to apps hosted in its App Store. The end
 result? A potentially useful API shackled to Apple's ecosystem.
 
-Thankfully, [Eloy Durán](https://github.com/alloy) put together a
-[an osx app](https://github.com/alloy/terminal-notifier) that allows terminal access to the sandboxed API.
-**gosx-notifier** embeds this app with a simple interface to the closed API.
+Thankfully, [Eloy Durán](https://github.com/alloy) put together [an osx app](https://github.com/alloy/terminal-notifier) that allows terminal access to the sandboxed API. **gosx-notifier** embeds this app with a simple interface to the closed API.
 
 It's not perfect, and the implementor will quickly notice its limitations. However, it's a start and any pull requests are accepted and encouraged!
 
@@ -54,6 +52,9 @@ func main() {
 
     //Optionally, set a sound from a predefined set.
     note.Sound = gosxnotifier.Basso
+    
+    //Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
+    note.Group = "com.unique.yourapp.identifier"
 
     //Optionally, set a sender (Notification will now use the Safari icon)
     note.Sender = "com.apple.Safari"

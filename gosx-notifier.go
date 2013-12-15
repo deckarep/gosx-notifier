@@ -33,6 +33,7 @@ type Notification struct {
 	Sound    Sound  //optional
 	Link     string //optional
 	Sender   string //optional
+	Group    string //optional
 }
 
 func NewNotification(message string) *Notification {
@@ -64,6 +65,11 @@ func (n *Notification) Push() error {
 	//add sound if specified
 	if n.Sound != "" {
 		commandTuples = append(commandTuples, []string{"-sound", string(n.Sound)}...)
+	}
+
+	//add group if specified
+	if n.Group != "" {
+		commandTuples = append(commandTuples, []string{"-group", n.Group}...)
 	}
 
 	//add url if specified
