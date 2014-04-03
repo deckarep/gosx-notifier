@@ -8,7 +8,7 @@ A [Go](http://golang.org) lib for sending desktop notifications to OSX Mountain 
 Update 4/3/2014
 ------
 On OSX 10.9 and above gosx-notifier now supports images and icons.
-![Now with custom icon support](http://github.com/deckarep/gosx-notifier/example.png)
+![Now with custom icon support](../blob/master/example.png?raw=true)
 
 Synopsis
 --------
