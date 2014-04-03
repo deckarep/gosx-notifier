@@ -30,6 +30,13 @@ func init() {
 	}
 }
 
+func exists(file string) bool {
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
 func installTerminalNotifier() error {
 	rootPath = filepath.Join(os.TempDir(), tempDirSuffix)
 
