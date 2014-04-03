@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/url"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -27,13 +28,15 @@ const (
 )
 
 type Notification struct {
-	Message  string //required
-	Title    string //optional
-	Subtitle string //optional
-	Sound    Sound  //optional
-	Link     string //optional
-	Sender   string //optional
-	Group    string //optional
+	Message      string //required
+	Title        string //optional
+	Subtitle     string //optional
+	Sound        Sound  //optional
+	Link         string //optional
+	Sender       string //optional
+	Group        string //optional
+	AppIcon      string //optional
+	ContentImage string //optional
 }
 
 func NewNotification(message string) *Notification {
@@ -72,12 +75,33 @@ func (n *Notification) Push() error {
 		commandTuples = append(commandTuples, []string{"-group", n.Group}...)
 	}
 
+	//add appIcon if specified
+	if n.AppIcon != "" {
+		img, err := normalizeImagePath(n.AppIcon)
+
+		if err != nil {
+			return err
+		}
+
+		commandTuples = append(commandTuples, []string{"-appIcon", img}...)
+	}
+
+	//add contentImage if specified
+	if n.ContentImage != "" {
+		img, err := normalizeImagePath(n.ContentImage)
+
+		if err != nil {
+			return err
+		}
+		commandTuples = append(commandTuples, []string{"-contentImage", img}...)
+	}
+
 	//add url if specified
 	url, err := url.Parse(n.Link)
 	if err != nil {
 		n.Link = ""
 	}
-	if url != nil {
+	if url != nil && n.Link != "" {
 		commandTuples = append(commandTuples, []string{"-open", n.Link}...)
 	}
 
@@ -101,4 +125,12 @@ func (n *Notification) Push() error {
 	}
 
 	return nil
+}
+
+func normalizeImagePath(image string) (string, error) {
+	if imagePath, err := filepath.Abs(image); err != nil {
+		return "", errors.New("Could not resolve image path of image: " + image)
+	} else {
+		return imagePath, nil
+	}
 }

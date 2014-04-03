@@ -3,6 +3,7 @@ package gosxnotifier
 import (
 	"log"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -91,6 +92,63 @@ func Test_Group(t *testing.T) {
 			t.Error("Test_Group failed with error: ", err)
 		}
 
+	}
+}
+
+func Test_AppIcon(t *testing.T) {
+	const appIcon string = "gopher.png"
+
+	n := NewNotification("Testing App Icon")
+
+	if icon, err := filepath.Abs(appIcon); err != nil {
+		t.Error("Test_AppIcon could not get the absolute file of: ", appIcon)
+	} else {
+		n.AppIcon = icon
+	}
+
+	err := n.Push()
+
+	if err != nil {
+		t.Error("Test_AppIcon failed with error: ", err)
+	}
+}
+
+func Test_ContentImage(t *testing.T) {
+	const contentImage string = "gopher.png"
+
+	n := NewNotification("Testing Content Image")
+
+	if img, err := filepath.Abs(contentImage); err != nil {
+		t.Error("Test_AppIcon could not get the absolute file of: ", contentImage)
+	} else {
+		n.ContentImage = img
+	}
+
+	err := n.Push()
+
+	if err != nil {
+		t.Error("Test_ContentImage failed with error: ", err)
+	}
+}
+
+func Test_ContentImageAndIcon(t *testing.T) {
+	const image string = "gopher.png"
+
+	n := NewNotification("Testing Content Image and Icon")
+	n.Title = "Hey Gopher!"
+	n.Subtitle = "I eat Goroutines for breakfast!"
+
+	if img, err := filepath.Abs(image); err != nil {
+		t.Error("Test_AppIcon could not get the absolute file of: ", image)
+	} else {
+		n.ContentImage = img
+		n.AppIcon = img
+	}
+
+	err := n.Push()
+
+	if err != nil {
+		t.Error("Test_ContentImageAndIcon failed with error: ", err)
 	}
 }
 

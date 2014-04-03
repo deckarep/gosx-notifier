@@ -5,6 +5,11 @@ A [Go](http://golang.org) lib for sending desktop notifications to OSX Mountain 
 
 [![GoDoc](http://godoc.org/github.com/deckarep/gosx-notifier?status.png)](http://godoc.org/github.com/deckarep/gosx-notifier)
 
+Update 4/3/2014
+------
+On OSX 10.9 and above gosx-notifier now supports images and icons.
+![Now with custom icon support](http://github.com/deckarep/gosx-notifier/example.png)
+
 Synopsis
 --------
 OSX Mountain Lion comes packaged with a built-in notification center. For whatever reason, [Apple sandboxed the
@@ -52,7 +57,7 @@ func main() {
 
     //Optionally, set a sound from a predefined set.
     note.Sound = gosxnotifier.Basso
-    
+
     //Optionally, set a group which ensures only one notification is ever shown replacing previous notification of same group id.
     note.Group = "com.unique.yourapp.identifier"
 
@@ -62,6 +67,12 @@ func main() {
     //Optionally, specifiy a url or bundleid to open should the notification be
     //clicked.
     note.Link = "http://www.yahoo.com" //or BundleID like: com.apple.Terminal
+
+    //Optionally, an app icon (10.9+ ONLY)
+    note.AppIcon = "gopher.png"
+
+    //Optionally, a content image (10.9+ ONLY)
+    note.ContentImage = "gopher.png"
 
     //Then, push the notification
     err := note.Push()
@@ -158,4 +169,3 @@ This project is dual licensed under [any licensing defined by the underlying app
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/deckarep/gosx-notifier/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
