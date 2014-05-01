@@ -20,7 +20,7 @@ Thankfully, [Eloy Durán](https://github.com/alloy) put together [an osx app](ht
 
 It's not perfect, and the implementor will quickly notice its limitations. However, it's a start and any pull requests are accepted and encouraged!
 
-Dependancies:
+Dependencies:
 -------------
 There are none! If you utilize this package and create a binary executable it will auto-magically install the terminal-notifier component into a temp directory of the server.  This is possible because in this latest version the terminal-notifier binary is now statically embedded into the Go source files.
 
