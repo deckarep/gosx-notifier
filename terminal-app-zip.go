@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 const (
@@ -21,12 +22,23 @@ var (
 	FinalPath string
 )
 
-func init() {
-	err := installTerminalNotifier()
-	if err != nil {
-		log.Fatal("Could not install Terminal Notifier to a temp directory")
+func supportedOS() bool {
+	if runtime.GOOS == "darwin" {
+		return true
 	} else {
-		FinalPath = filepath.Join(rootPath, executablePath)
+		log.Print("OS does not support terminal-notifier")
+		return false
+	}
+}
+
+func init() {
+	if supportedOS() {
+		err := installTerminalNotifier()
+		if err != nil {
+			log.Fatal("Could not install Terminal Notifier to a temp directory")
+		} else {
+			FinalPath = filepath.Join(rootPath, executablePath)
+		}
 	}
 }
 
