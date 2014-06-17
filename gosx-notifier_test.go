@@ -2,17 +2,9 @@ package gosxnotifier
 
 import (
 	"log"
-	"os"
 	"path/filepath"
 	"testing"
 )
-
-func exists(file string) bool {
-	if _, err := os.Stat(file); os.IsNotExist(err) {
-		return false
-	}
-	return true
-}
 
 func Test_Install(t *testing.T) {
 	//assert file exists
