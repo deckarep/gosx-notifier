@@ -137,16 +137,14 @@ func pinger(ch chan string, site string) {
 			ch <- "-" + site
 		}
 
-		if res != nil && res.Body != nil {
-			defer res.Body.Close()
-
-			if res.StatusCode != 200 {
-				ch <- "-" + site
-			} else {
-				ch <- "+" + site
-			}
+		
+		if res.StatusCode != 200 {
+			ch <- "-" + site
+		} else {
+			ch <- "+" + site
 		}
-
+		
+		res.Body.Close()
 		time.Sleep(30 * time.Second)
 	}
 }
