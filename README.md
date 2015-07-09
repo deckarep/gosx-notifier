@@ -33,6 +33,18 @@ The following command will install the notification api for Go along with the bi
 go get github.com/deckarep/gosx-notifier
 ```
 
+Using the Command Line
+-------------
+```Go
+notify "Wow! A notification!!!"
+```
+
+useful for knowing when long running commands finish
+
+```Go
+longRunningCommand || notify done!
+```
+
 Using the Code
 ------------------
 It's a pretty straightforward API:
