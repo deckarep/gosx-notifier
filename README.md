@@ -42,7 +42,7 @@ notify "Wow! A notification!!!"
 useful for knowing when long running commands finish
 
 ```Go
-longRunningCommand || notify done!
+longRunningCommand && notify done!
 ```
 
 Using the Code
