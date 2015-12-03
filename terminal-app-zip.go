@@ -2,7 +2,7 @@ package gosxnotifier
 
 import (
 	"archive/zip"
-	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -35,7 +35,7 @@ func init() {
 	if supportedOS() {
 		err := installTerminalNotifier()
 		if err != nil {
-			log.Fatal("Could not install Terminal Notifier to a temp directory")
+			log.Fatalf("Could not install Terminal Notifier to a temp directory: %s", err)
 		} else {
 			FinalPath = filepath.Join(rootPath, executablePath)
 		}
@@ -59,19 +59,19 @@ func installTerminalNotifier() error {
 
 	err := ioutil.WriteFile(zipPath, terminalnotifier(), 0700)
 	if err != nil {
-		return errors.New("could not write terminal-notifier file")
+		return fmt.Errorf("could not write terminal-notifier file (%s): %s", zipPath, err)
 	}
 
 	defer os.Remove(zipPath)
 
 	err = unpackZipArchive(zipPath, rootPath)
 	if err != nil {
-		return errors.New("could not unpack zip terminal-notifier file")
+		return fmt.Errorf("could not unpack zip terminal-notifier file: %s", err)
 	}
 
 	err = os.Chmod(filepath.Join(rootPath, executablePath), 0755)
 	if err != nil {
-		return errors.New("could not make terminal-notfier executable")
+		return fmt.Errorf("could not make terminal-notifier executable: %s", err)
 	}
 
 	return nil
