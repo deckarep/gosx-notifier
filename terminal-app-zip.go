@@ -2,9 +2,9 @@ package gosxnotifier
 
 import (
 	"archive/zip"
+	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -56,15 +56,12 @@ func installTerminalNotifier() error {
 	if exists(filepath.Join(rootPath, executablePath)) {
 		return nil
 	}
-
-	err := ioutil.WriteFile(zipPath, terminalnotifier(), 0700)
+	buf := bytes.NewReader(terminalnotifier())
+	reader, err := zip.NewReader(buf, int64(buf.Len()))
 	if err != nil {
-		return fmt.Errorf("could not write terminal-notifier file (%s): %s", zipPath, err)
+		return err
 	}
-
-	defer os.Remove(zipPath)
-
-	err = unpackZipArchive(zipPath, rootPath)
+	err = unpackZip(reader, rootPath)
 	if err != nil {
 		return fmt.Errorf("could not unpack zip terminal-notifier file: %s", err)
 	}
@@ -77,23 +74,16 @@ func installTerminalNotifier() error {
 	return nil
 }
 
-func unpackZipArchive(filename, tempPath string) error {
-	reader, err := zip.OpenReader(filename)
-	if err != nil {
-		return err
-	}
-
-	defer reader.Close()
-
-	for _, zipFile := range reader.Reader.File {
+func unpackZip(reader *zip.Reader, tempPath string) error {
+	for _, zipFile := range reader.File {
 		name := zipFile.Name
 		mode := zipFile.Mode()
 		if mode.IsDir() {
-			if err = os.MkdirAll(filepath.Join(tempPath, name), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Join(tempPath, name), 0755); err != nil {
 				return err
 			}
 		} else {
-			if err = unpackZippedFile(name, tempPath, zipFile); err != nil {
+			if err := unpackZippedFile(name, tempPath, zipFile); err != nil {
 				return err
 			}
 		}
