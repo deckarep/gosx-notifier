@@ -2,9 +2,9 @@ package gosxnotifier
 
 import (
 	"archive/zip"
-	"errors"
+	"bytes"
+	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -35,7 +35,7 @@ func init() {
 	if supportedOS() {
 		err := installTerminalNotifier()
 		if err != nil {
-			log.Fatal("Could not install Terminal Notifier to a temp directory")
+			log.Fatalf("Could not install Terminal Notifier to a temp directory: %s", err)
 		} else {
 			FinalPath = filepath.Join(rootPath, executablePath)
 		}
@@ -56,44 +56,34 @@ func installTerminalNotifier() error {
 	if exists(filepath.Join(rootPath, executablePath)) {
 		return nil
 	}
-
-	err := ioutil.WriteFile(zipPath, terminalnotifier(), 0700)
+	buf := bytes.NewReader(terminalnotifier())
+	reader, err := zip.NewReader(buf, int64(buf.Len()))
 	if err != nil {
-		return errors.New("could not write terminal-notifier file")
+		return err
 	}
-
-	defer os.Remove(zipPath)
-
-	err = unpackZipArchive(zipPath, rootPath)
+	err = unpackZip(reader, rootPath)
 	if err != nil {
-		return errors.New("could not unpack zip terminal-notifier file")
+		return fmt.Errorf("could not unpack zip terminal-notifier file: %s", err)
 	}
 
 	err = os.Chmod(filepath.Join(rootPath, executablePath), 0755)
 	if err != nil {
-		return errors.New("could not make terminal-notfier executable")
+		return fmt.Errorf("could not make terminal-notifier executable: %s", err)
 	}
 
 	return nil
 }
 
-func unpackZipArchive(filename, tempPath string) error {
-	reader, err := zip.OpenReader(filename)
-	if err != nil {
-		return err
-	}
-
-	defer reader.Close()
-
-	for _, zipFile := range reader.Reader.File {
+func unpackZip(reader *zip.Reader, tempPath string) error {
+	for _, zipFile := range reader.File {
 		name := zipFile.Name
 		mode := zipFile.Mode()
 		if mode.IsDir() {
-			if err = os.MkdirAll(filepath.Join(tempPath, name), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Join(tempPath, name), 0755); err != nil {
 				return err
 			}
 		} else {
-			if err = unpackZippedFile(name, tempPath, zipFile); err != nil {
+			if err := unpackZippedFile(name, tempPath, zipFile); err != nil {
 				return err
 			}
 		}
