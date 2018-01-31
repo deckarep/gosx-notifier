@@ -24,7 +24,8 @@ const (
 	Pop     Sound = "Pop"
 	Purr    Sound = "Purr"
 	Sosumi  Sound = "Sosumi"
-	Tink    Sound = "Tink"
+	Submarine  Sound = "Submarine"
+	Tink       Sound = "Tink"	
 )
 
 type Notification struct {
