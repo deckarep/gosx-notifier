@@ -52,7 +52,7 @@
 		<true/>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2012 Eloy Durán. All rights reserved.</string>
+	<string>Copyright © 2012 Eloy Durán. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

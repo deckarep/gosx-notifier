@@ -6,7 +6,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"log"
 )
 
 type Sound string
@@ -128,10 +127,7 @@ func (n *Notification) Push() error {
 		}
 
 		_, err = exec.Command(FinalPath, commandTuples...).Output()
-		log.Println(FinalPath)
-		log.Println("%v", commandTuples)
 		if err != nil {
-			log.Println(err)
 			return err
 		}
 	}
