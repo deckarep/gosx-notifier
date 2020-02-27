@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"log"
 )
 
 type Sound string
@@ -38,6 +39,7 @@ type Notification struct {
 	Group        string //optional
 	AppIcon      string //optional
 	ContentImage string //optional
+	Execute      string //optional
 }
 
 func NewNotification(message string) *Notification {
@@ -116,12 +118,20 @@ func (n *Notification) Push() error {
 			commandTuples = append(commandTuples, []string{"-sender", n.Sender}...)
 		}
 
+		//add group if specified
+		if n.Execute != "" {
+			commandTuples = append(commandTuples, []string{"-execute", n.Execute}...)
+		}
+
 		if len(commandTuples) == 0 {
 			return errors.New("Please provide a Message and Type at a minimum.")
 		}
 
 		_, err = exec.Command(FinalPath, commandTuples...).Output()
+		log.Println(FinalPath)
+		log.Println("%v", commandTuples)
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 	}
