@@ -38,6 +38,7 @@ type Notification struct {
 	Group        string //optional
 	AppIcon      string //optional
 	ContentImage string //optional
+	Execute      string //optional
 }
 
 func NewNotification(message string) *Notification {
@@ -114,6 +115,11 @@ func (n *Notification) Push() error {
 		//add sender if specified
 		if strings.HasPrefix(strings.ToLower(n.Sender), "com.") {
 			commandTuples = append(commandTuples, []string{"-sender", n.Sender}...)
+		}
+
+		//add group if specified
+		if n.Execute != "" {
+			commandTuples = append(commandTuples, []string{"-execute", n.Execute}...)
 		}
 
 		if len(commandTuples) == 0 {
